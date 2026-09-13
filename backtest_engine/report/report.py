@@ -7,7 +7,7 @@ from metrics import risk_metrics as rm
 from metrics import time_metrics as tm
 
 #Making the document
-df = pd.read_parquet("../outputs/trades_baseline.parquet")
+df = pd.read_parquet("../outputs/trades_baseline_worstcase.parquet")
 pdf = FPDF()
 pdf.add_page()
 
@@ -67,4 +67,4 @@ pdf.cell(90,10, text = f"Maximum Time: {fm.format_min(tm.maximum_time(df))}", ne
 pdf.cell(0,10, text = f"Minimum Time: {fm.format_min(tm.minimum_time(df))}", new_x='LMARGIN', new_y='NEXT')
 
 
-pdf.output('../report/results/baseline_report.pdf')
+pdf.output('../report/results/baseline_worst_case_report.pdf')

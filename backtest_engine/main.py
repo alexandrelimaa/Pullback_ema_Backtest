@@ -56,5 +56,5 @@ df_trades = st.run_simulation(candle, tick_data, stop_loss, trailing_activation,
 #======================#
 
 #=== Making the list ===#
-df_trades.to_parquet('trades_baseline.parquet')   # Salve the file to use in metrics
+df_trades.to_parquet('trades_baseline_worstcase.parquet')   # Salve the file to use in metrics
 #=======================#
