@@ -46,3 +46,11 @@ def load_all_files(pattern):
     combined = pd.concat(dataframes)
     combined = combined.sort_index()
     return combined
+
+
+def aggregate_by_second(tick_def):
+    """Aggregate by second the tick price column"""
+    per_second = ticks_def.groupby(ticks_def.index).agg(
+        High=('Price', 'max'),
+        Low=('Price', 'min')
+    )
