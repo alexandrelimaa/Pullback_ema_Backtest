@@ -48,9 +48,10 @@ def load_all_files(pattern):
     return combined
 
 
-def aggregate_by_second(tick_def):
+def aggregate_by_second(tick_df):
     """Aggregate by second the tick price column"""
-    per_second = ticks_def.groupby(ticks_def.index).agg(
+    per_second = tick_df.groupby(tick_df.index).agg(
         High=('Price', 'max'),
         Low=('Price', 'min')
     )
+    return per_second
