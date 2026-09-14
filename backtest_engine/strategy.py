@@ -128,9 +128,9 @@ def run_simulation(candle, tick_data, stop_loss, trailing_activation, trailing_s
                 exit_time, exit_price = simulate_tick( entry_price, trade_type, operation_ticks, stop_loss,trailing_activation, trailing_stop)
                 if exit_time is not None:
                     if trade_type == 'buy':
-                        profit = (entry_price - exit_price) - cost_per_trade
-                    elif trade_type == 'sell':
                         profit = (exit_price - entry_price) - cost_per_trade
+                    elif trade_type == 'sell':
+                        profit = (entry_price - exit_price) - cost_per_trade
                     trades.append({
                         'asset' : asset,
                         'trade_type': trade_type,
