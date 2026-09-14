@@ -1,7 +1,7 @@
 from report.grafics import plot
 import pandas as pd
 
-df = pd.read_parquet("../outputs/trades_baseline.parquet")
+df = pd.read_parquet("../outputs/trades_baseline_bestcase.parquet")
 plot.equity_curve(df)
 plot.drawdown_curve(df)
 plot.profit_time_bars(df)

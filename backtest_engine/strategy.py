@@ -2,6 +2,9 @@
 import numpy as np
 import pandas as pd
 
+from helpers import aggregate_by_second
+
+
 def calculate_emas(candle,short_period,long_period):
     candle['short_ema'] = candle['Close'].ewm(span=short_period, adjust=False).mean()
     candle['long_ema'] = candle['Close'].ewm(span=long_period, adjust=False).mean()
@@ -69,29 +72,28 @@ def calculate_signal(candle,session_start,session_end):
     return candle
 
 def simulate_tick(entry_price, trade_type, tick_after_entry, stop_loss, trailing_activation, trailing_stop):
-
-
+    tick_after_entry = aggregate_by_second(tick_after_entry)
     if trade_type == 'buy':
-        best_price = tick_after_entry['Price'].cummax()
+        best_price = tick_after_entry['High'].cummax()
         trailing_on = best_price >= (entry_price + trailing_activation)
         current_stop_loss = np.where(trailing_on , best_price - trailing_stop, entry_price - stop_loss)
-        exit_condition = tick_after_entry['Price'] <= current_stop_loss
+        exit_condition = tick_after_entry['High'] <= current_stop_loss
         if not exit_condition.any():
             return None, None
         exit_position = exit_condition.values.argmax()
-        exit_price = tick_after_entry['Price'].iloc[exit_position]
+        exit_price = tick_after_entry['High'].iloc[exit_position]
         exit_time = tick_after_entry.index[exit_position]
         return exit_time, exit_price
 
     elif trade_type == 'sell':
-        best_price = tick_after_entry['Price'].cummin()
+        best_price = tick_after_entry['Low'].cummin()
         trailing_on = best_price <= (entry_price - trailing_activation)
         current_stop_loss = np.where(trailing_on, best_price + trailing_stop, entry_price + stop_loss)
-        exit_condition = tick_after_entry['Price'] >= current_stop_loss
+        exit_condition = tick_after_entry['Low'] >= current_stop_loss
         if not exit_condition.any():
             return None, None
         exit_position = exit_condition.values.argmax()
-        exit_price = tick_after_entry['Price'].iloc[exit_position]
+        exit_price = tick_after_entry['Low'].iloc[exit_position]
         exit_time = tick_after_entry.index[exit_position]
         return exit_time, exit_price
 
