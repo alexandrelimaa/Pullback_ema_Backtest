@@ -4,7 +4,7 @@ from report.metrics import risk_metrics as rm
 from report.metrics import formatting as fm
 from report.metrics import time_metrics as tm
 import pandas as pd
-df_trades = pd.read_parquet('../outputs/trades_baseline_worstcase.parquet')
+df_trades = pd.read_parquet('../outputs/trades_stop125.parquet')
 
 print('='* 40)
 print(f'Win rate: {(pfm.win_rate(df_trades)):.2f}%')

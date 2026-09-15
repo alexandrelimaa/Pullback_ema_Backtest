@@ -15,7 +15,7 @@ long_ema = 400
 session_start = time(9 , 40)          #Only for entrance
 session_end = time(11 , 15)
     #---Stop Loss and Take Profit---#
-stop_loss = 200
+stop_loss = 125
 trailing_activation = 65   #whenever hits 65 points = 13 tick
 trailing_stop = 15         #protect with 3 ticks of distance after activation
 
@@ -56,5 +56,5 @@ df_trades = st.run_simulation(candle, tick_data, stop_loss, trailing_activation,
 #======================#
 
 #=== Making the list ===#
-df_trades.to_parquet('trades_baseline_worstcase.parquet')   # Salve the file to use in metrics
+df_trades.to_parquet('trades_stop125.parquet')   # Salve the file to use in metrics
 #=======================#
